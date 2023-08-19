@@ -105,3 +105,40 @@ https://firebase.google.com/?hl=ja
             + FIrebaseでリアルタイムデータベースからデータベースの作成
                 + セキュリティルールで"ロックモードで開始"
                 + "ルール"タブでread, writeをtrueにすると読み書きができるようになる
+
+            + Realtime Database の list を使ってデータを配列で保存
+
+    + icon にはFont Awesomeを使ってみる
+    パッケージインストール
+
+        npm install @fortawesome/fontawesome-free@5.14.0 --save
+
+    angular.jsonのstylesに
+
+        "./node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+
+    を追加する
+
++ Fire base の Authenticationを使ったメール認証
+    + "構築"から Authentication を選択
+    + メール / パスワードを有効にする
+
+    + 自動送信メールの設定
+        + templateタブからtemplate言語の円光
+        + ここで、メアドの確認、パスワードの再設定、メアドの変更などを編集できる
+            + 差出人の変更や、ドメインの変更は行える
+
+### AngularのModuleシステムについて
+NgModuledデコレータを利用してmoduleの定義ができ、
+import と export を使ってモジュール間の機能を共有できる
+
++ 一つのモジュールの中に他のモジュールをimportすることで階層構造のように使える
++ exportsでは、外のモジュールでも使える
+
+![](/figure/module.png)
+
++ RootModule: アプリケーション全体で読み込む(App moduleのこと)
++ Shared Module: すべてのモジュールで共通化された共通モジュール（コンポーネントやパイプ、カスタムディレクティブなど）
++ Feature Module: 機能モジュール（画面ごとに作成するモジュール、ルーティングとセット）
++ Core Module: サービスやコンポーネントなど、一度だけ読み込めばよいモジュール
+※ver7以降で削除
