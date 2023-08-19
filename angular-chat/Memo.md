@@ -2,6 +2,9 @@
 
     ng new angular-caht --prefix=ac
 
+#### コンストラクターの初期化エラー
+tsconfig.jsonに　```"strictPropertyInitialization": false,```　を追加しておくとエラーで怒られなくなる
+
 ### BootStrapのインストール
 Bootstrapのstyleを利用していく
 
@@ -142,3 +145,23 @@ import と export を使ってモジュール間の機能を共有できる
 + Feature Module: 機能モジュール（画面ごとに作成するモジュール、ルーティングとセット）
 + Core Module: サービスやコンポーネントなど、一度だけ読み込めばよいモジュール
 ※ver7以降で削除
+
+### AngularでAuthGuardを使ったユーザのページアクセス制御
+
+    const routes: Routes = [
+        {
+            path: '',
+            component: ***,
+            canActivate: [AuthGuard] <=　これ
+        }
+    ];
+
+Guardは配列で指定する
++ CanActivate: 対象パスへのページ遷移を許可するか
++ CanActivateChild: 対象パスの子ルートへの遷移を許可するか
++ CanDeactivate: 現在のパスから他のパスへの遷移を制限するか
++ Canload: loadChildrenでモジュールを読み込むかどうか
++ Resolve: ルーティングの遷移中の中間処理を指定する
+
+コマンドで ```ng g guard ファイル名``` を実行すると、
+上記のどれについて記述するか聞かれるので選択して作成する

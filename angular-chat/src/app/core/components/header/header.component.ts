@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../sevices/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'ac-header',

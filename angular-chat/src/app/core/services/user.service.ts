@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth'
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { User } from 'src/app/class/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class UserService {
 
-  constructor(private afAuth: AngularFireAuth) {
-    // emailが認証されているか確認できる
-    // user.emailVerifiedの真偽値で分かる
-    // this.afAuth.onAuthStateChanged( user => console.log(user));
-
-  }
-
+  constructor(
+    private afAuth: AngularFireAuth,
+    private db: AngularFireDatabase
+  ) { }
+ 
   // PromiseオブジェクトはauthService.create(email, passward)という形で、利用でき、firebaseと通信し、
   // かえってきた値をpromiseのthen((credential) => credential)メソッドで処理することができる
   // .catch((error) => error)でエラー処理もできる
@@ -25,18 +25,21 @@ export class AuthService {
       .then( (credential) => {
         const { user } = credential;
         const actionCodeSettings = {
-          url: `http://localhost:4200/?newAccount=true&email=${user?.email}`
+          url: `http://localhost:4200/?newAccount=true&email=${user!.email}`
         };
-        user?.sendEmailVerification(actionCodeSettings);
+        user!.sendEmailVerification(actionCodeSettings);
+
+        this.db.object(`/users/${user!.uid}`).set( new User(user!));
       });
   }
 
-  login(email: string, password: string): Promise<firebase.default.auth.UserCredential | void>{
-    return this.afAuth.signInWithEmailAndPassword(email, password)
-      .catch( error => console.error(error) );
-  } 
-
-  logout(): Promise<void>{
-    return this.afAuth.signOut();
+  update(values: { displayName?: string, photoURL?: string } ): Promise <void> {
+    return this.afAuth.currentUser.then((user: firebase.default.User | null) => {
+      if(user){
+        user.updateProfile(values)
+        .then( () => this.db.object(`/users/${user.uid}`).update(values))
+        .catch( error => console.error( error ) );
+      }
+    });
   }
 }

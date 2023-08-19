@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../core/sevices/auth.service';
+import { UserService } from '../core/services/user.service';
 
 @Component({
   selector: 'ac-sign-up',
@@ -12,7 +12,7 @@ export class SignUpComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private userService: UserService
   ) { }
 
   signup(form: NgForm): void{
@@ -20,7 +20,8 @@ export class SignUpComponent {
     // console.log(form.value);
     
     // this.router.navigateByUrl('/')でトップページへ強制リダイレクト
-    this.authService.create(email, password).then( () => this.router.navigateByUrl('/'));
+    // this.router.navigateByUrl('/users/new')でyユーザ情報入力画面へリダイレクト
+    this.userService.create(email, password).then( () => this.router.navigateByUrl('/users/new'));
   }
 
 }
