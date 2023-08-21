@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
+import { Observable } from 'rxjs';
+import { User } from 'src/app/class/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  user: Observable<User | null>;
 
   constructor(private afAuth: AngularFireAuth) {
     // emailが認証されているか確認できる

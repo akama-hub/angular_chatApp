@@ -5,11 +5,13 @@ import { UsersRoutingModule } from './users-routing.module';
 import { NewUserComponent } from './new-user/new-user.component';
 // exports配列にFormsModule が exports されている
 import { SharedModule } from '../shared/shared.module';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 
 @NgModule({
   declarations: [
-    NewUserComponent
+    NewUserComponent,
+    UserDetailComponent
   ],
   imports: [
     CommonModule,

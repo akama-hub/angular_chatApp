@@ -165,3 +165,46 @@ Guardは配列で指定する
 
 コマンドで ```ng g guard ファイル名``` を実行すると、
 上記のどれについて記述するか聞かれるので選択して作成する
+
+
+### Firebaseアプリケーションの公開
+コマンドで```firebase use --add```を実行すると、
+アプリケーションIDを聞かれるので、firebaseのwebページの歯車アイコン（設定）からアプリケーションIDを調べてきて、それを選択
+
+    ng build --configuration production
+    # ng build --prod   <-　ver14から上に変更となった
+
+本番環境用のプロダクション用のbuildが行える。
+
+本番環境になると、environments/environemnt.tsではなくenvironments/environemnt.prod.tsが読み込まれるので、
+environments/environemnt.prod.tsにもfirebaseのコンフィグが必要。
+逆に言えば、このコンフィグを編集することでデプロイ先の変更ができる。
+
+このビルドされたファイルをfirebaseホスティングにデプロイする
+
+    firebase experiments:enable webframeworks
+    firebase deploy
+
+hosting URLに公開URLが書いてある
+
+このプロジェクトは、
++ Project Console: https://console.firebase.google.com/project/chat-99479/overview
++ Hosting URL: https://chat-99479.web.app
+
+
+### 関連ライブラリ
++ BootStrap: https://ng-bootstrap.github.io/#/home
+ 
+    cssやコンポーネントのダウンロードができる
+
++ Angular Material: https://material.angular.io/
+ 
+    コンポーネントのダウンロードができる
+
++ Swiper: https://swiperjs.com/
+
+    javascriptのライブラリをangularようにしたものでスマホのスワイプ機能に対応している
+
++ NGRX: https://ngrx.io/
+
+    状態管理用のライブラリ

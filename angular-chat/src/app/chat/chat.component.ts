@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Comment } from '../class/comment';
 import { User } from '../class/user';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { AngularFireDatabase, AngularFireList, snapshotChanges, SnapshotAction } from '@angular/fire/compat/database';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { getAuth } from 'firebase/auth';
+import { AuthService } from '../core/services/auth.service';
 
 
 @Component({
@@ -18,13 +18,14 @@ export class ChatComponent {
   comments$: Observable <Comment[]>;
   commentsRef: AngularFireList<Comment>;
   currentUser: User;
-  currentUser$: User;
+  currentUser$: Observable <User|null>;
   comment = ''; 
   // item$: Observable <any>;
 
   constructor(
     private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase) {
+    private db: AngularFireDatabase,
+    public auth: AuthService) {
     // リアルタイムデータベースから単一データを取得する（/itemから）
     // valueChangesでObservable型にキャストする
     // this.item$ = db.object('/item').valueChanges();
@@ -35,12 +36,12 @@ export class ChatComponent {
     this.commentsRef = db.list('/comments');
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void{     
     this.currentUser$ = this.afAuth.authState.pipe(
-      map( (user: firebase.default.User) => {
-        if(user){
+      map((user: firebase.default.User | null) => {
+        if (user) {
           this.currentUser = new User(user);
-          return this.currentUser
+          return this.currentUser;
         }
         return null;
       })
