@@ -1,3 +1,12 @@
+## Git clone 後にすること
+clone した path 上で
+```
+npm install
+```
+これによって、プロジェクト内の「package.json」を元に、必要なパッケージを勝手にインストールしてくれる。
+
+## 以降、このプロジェクトの作成時に学習したことをメモしていく
+
 ### プロジェクトの立ち上げ
 
     ng new angular-caht --prefix=ac
